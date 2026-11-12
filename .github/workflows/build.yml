@@ -23,6 +23,14 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: 云端自动修正构建脚本语法
+        run: |
+          # 修改变量名避免与 DSL 方法重名，本地文件保持不变
+          sed -i "s/def keyPassword/def kpKey/g" app/build.gradle
+          sed -i "s/keyPassword keyPassword/keyPassword kpKey/g" app/build.gradle
+          # 移除固定版本号，自动匹配云端可用的构建工具
+          sed -i "/buildToolsVersion/d" app/build.gradle
+
       - name: 执行 Release 编译
         run: gradle assembleRelease
         env:
