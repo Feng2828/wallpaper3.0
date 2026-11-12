@@ -18,21 +18,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 缓存 Gradle 加速编译
-        uses: actions/cache@v4
+      - name: 配置 Gradle 环境
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: 授予编译脚本执行权限
-        run: chmod +x gradlew
+          gradle-version: '8.7'
 
       - name: 执行 Release 编译
-        run: ./gradlew assembleRelease
+        run: gradle assembleRelease
         env:
           VERSION_CODE: ${{ github.run_number }}
 
