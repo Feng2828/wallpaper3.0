@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 使用系统自带的 Material 主题，不依赖 AppCompat / AndroidX -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorAccent">#2F6FEB</item>
+        <item name="android:colorPrimary">#2F6FEB</item>
+        <item name="android:windowBackground">#F4F6F9</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#F4F6F9</item>
+        <item name="android:textColorPrimary">#1F2733</item>
+        <item name="android:textColorSecondary">#6B7684</item>
+    </style>
+</resources>

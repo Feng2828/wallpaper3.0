@@ -1,0 +1,4 @@
+// 根工程：只声明 Android Gradle Plugin，不引入任何第三方业务库
+plugins {
+    id 'com.android.application' version '8.6.1' apply false
+}

@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+}
+
+/*
+ * 覆盖安装三要素（务必不要改动）：
+ *   1) applicationId 固定为 com.hyperos.albumwallpaper
+ *   2) 所有版本都用同一个 release.p12 签名
+ *   3) versionCode 递增 —— 云端打包时由 GitHub Actions 的 run_number 自动注入
+ */
+def ksPassword  = System.getenv('KEYSTORE_PASSWORD') ?: 'albumwp2026'
+def keyPassword = System.getenv('KEY_PASSWORD')      ?: 'albumwp2026'
+def vCode       = (System.getenv('VERSION_CODE') ?: '1').toInteger()
+
+android {
+    namespace 'com.hyperos.albumwallpaper'
+    compileSdk 35
+    buildToolsVersion '35.0.0'
+
+    defaultConfig {
+        applicationId 'com.hyperos.albumwallpaper'
+        minSdk 29          // Android 10 起，K60E (Android 15) 完全兼容
+        targetSdk 34       // 稳定适配 Android 14/15 的权限与前台服务规则
+        versionCode vCode
+        versionName '1.0.' + vCode
+    }
+
+    signingConfigs {
+        release {
+            storeFile rootProject.file('release.p12')
+            storeType 'PKCS12'
+            storePassword ksPassword
+            keyAlias 'albumwallpaper'
+            keyPassword keyPassword
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // debug 包也用同一把钥匙，避免测试时签名冲突
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+// 本工程零第三方依赖：全部使用 Android 系统 API（含 SAF / MediaStore / ExifInterface）
