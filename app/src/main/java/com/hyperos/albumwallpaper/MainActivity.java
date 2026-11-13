@@ -56,6 +56,8 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         refreshAll();
+        // 打开设置页时按挂钟核对一次切换时刻（只读时间戳，绝不扫描相册）
+        AlbumWallpaperService.tickClock();
         // 若用户已开启悬浮球但服务被系统杀掉，回到 App 时顺手拉起（不是后台偷偷扫描）
         if (Prefs.ballEnabled(this) && Settings.canDrawOverlays(this)) {
             startBallService();

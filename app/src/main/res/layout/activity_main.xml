@@ -187,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="切换时旧图打底、新图 600ms 渐显；随机抽取，不按顺序。"
+                android:text="按真实时间计时：停在桌面、使用其它 App、息屏期间都照常切换；随机抽取，切换时旧图打底、新图 600ms 渐显。"
                 android:textColor="#8A94A3"
                 android:textSize="12sp" />
         </LinearLayout>

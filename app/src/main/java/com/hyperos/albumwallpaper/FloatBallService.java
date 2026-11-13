@@ -250,9 +250,18 @@ public class FloatBallService extends Service {
         }
     }
 
+    private int pollCount = 0;
+
     private final Runnable pollTask = new Runnable() {
         @Override public void run() {
             updateVisibility();
+            // 每 5 次（约 6 秒）用挂钟核对一次壁纸的切换时刻。
+            // 前台服务比普通后台线程更难被 HyperOS 冻结，等于给计时多上一道保险；
+            // 这里只做时间核对，绝不扫描相册。
+            if (++pollCount >= 5) {
+                pollCount = 0;
+                AlbumWallpaperService.tickClock();
+            }
             if (mainHandler != null) mainHandler.postDelayed(this, 1200);
         }
     };

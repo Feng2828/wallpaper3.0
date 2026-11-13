@@ -70,6 +70,15 @@ public final class Prefs {
         sp(c).edit().putLong(C.KEY_INTERVAL, ms).commit();
     }
 
+    /** 下一次自动切换的挂钟时刻；0 表示尚未初始化 */
+    public static long nextSwitchAt(Context c) {
+        return sp(c).getLong(C.KEY_NEXT_SWITCH_AT, 0L);
+    }
+
+    public static void setNextSwitchAt(Context c, long at) {
+        sp(c).edit().putLong(C.KEY_NEXT_SWITCH_AT, at).commit();
+    }
+
     public static boolean ballEnabled(Context c) {
         return sp(c).getBoolean(C.KEY_BALL, false);
     }
